@@ -67,7 +67,7 @@ auto* runtime_latency = monitoring::Sampler<3>::New(
 
 auto* model_call_count = monitoring::Counter<2>::New(
     "/tensorflow/serving/model_call_count",
-    "The call counter of each model-version", "model_nane", "model_version");
+    "The call counter of each model-version", "model_name", "model_version");
 
 // Returns the number of examples in the Input.
 int NumInputExamples(const internal::SerializedInput& input) {
