@@ -65,9 +65,9 @@ auto* runtime_latency = monitoring::Sampler<3>::New(
     },  // Scale of 10, power of 1.8 with bucket count 33 (~20 minutes).
     monitoring::Buckets::Exponential(10, 1.8, 33));
 
-auto* model_prediction_count = monitoring::Counter<2>::New(
-    "/tensorflow/serving/model_prediction_count",
-    "The predict counter of each model-version", "model_nane", "model_version");
+auto* model_call_count = monitoring::Counter<2>::New(
+    "/tensorflow/serving/model_call_count",
+    "The call counter of each model-version", "model_nane", "model_version");
 
 // Returns the number of examples in the Input.
 int NumInputExamples(const internal::SerializedInput& input) {
@@ -311,9 +311,9 @@ void RecordRuntimeLatency(const string& model_name, const string& api,
   runtime_latency->GetCell(model_name, api, runtime)->Add(latency_usec);
 }
 
-void RecordModelPredict(const string& model_name, int64 model_version) {
+void RecordModelCall(const string& model_name, int64 model_version) {
   std::string model_version_s = absl::StrFormat("%lld", model_version);
-  model_prediction_count->GetCell(model_name, model_version_s)->IncrementBy(1);
+  model_call_count->GetCell(model_name, model_version_s)->IncrementBy(1);
 }
 
 }  // namespace serving
