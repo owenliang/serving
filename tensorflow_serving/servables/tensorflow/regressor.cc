@@ -283,6 +283,8 @@ Status RunRegress(const RunOptions& run_options,
   MakeModelSpec(request.model_spec().name(),
                 request.model_spec().signature_name(), servable_version,
                 response->mutable_model_spec());
+  
+  RecordModelCall(response->model_spec().name(), response->model_spec().version().value());
 
   // Run regression
   return regressor_interface->Regress(request, response->mutable_result());
