@@ -215,7 +215,7 @@ Status RunPredict(
   RecordRuntimeLatency(request.model_spec().name(), /*api=*/"Predict",
                        /*runtime=*/"TF1",
                        end_microseconds - start_microseconds);
-  RecordModelCall(response->model_spec().name(), response->model_spec().version());
+  RecordModelCall(response->model_spec().name(), response->model_spec().version().value());
 
   return PostProcessPredictionResult(output_tensor_aliases, outputs, option,
                                      response);
